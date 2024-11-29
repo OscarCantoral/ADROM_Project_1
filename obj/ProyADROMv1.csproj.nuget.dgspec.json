@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\ProyADROMv1.csproj": {}
+    "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\ProyADROMv1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\ProyADROMv1.csproj": {
+    "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\ProyADROMv1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\ProyADROMv1.csproj",
+        "projectUniqueName": "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\ProyADROMv1.csproj",
         "projectName": "ProyADROMv1",
-        "projectPath": "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\ProyADROMv1.csproj",
+        "projectPath": "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\ProyADROMv1.csproj",
         "packagesPath": "C:\\Users\\Oscar Cantoral\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\obj\\",
+        "outputPath": "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

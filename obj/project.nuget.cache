@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JksOcjn5EzLC9oJQy3qV3uAvxJ35LX4iraQTVjWq/E1AllJAFWk9GouV9uBJwawNjnK+nZEwx2GXbSY+jY00Fw==",
+  "dgSpecHash": "QtQDHa8KQiY/gtChm63AjwJQvSGWaulXgICgctsHK9RdhLtGiR2kDgX5+NIbFnscs2I7kq2UgxpJd0xqg3+V+g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Oscar Cantoral\\source\\repos\\ProyADROMv1\\ProyADROMv1.csproj",
+  "projectFilePath": "C:\\CANTORAL\\Personal\\5. RepositorioGit\\ProyADROMv1\\ProyADROMv1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Oscar Cantoral\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Oscar Cantoral\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
