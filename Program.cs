@@ -10,7 +10,7 @@ namespace ProyADROMv1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\n=== Ingrese un texto para limpiar ===");
+            //Console.WriteLine("\n=== Ingrese un texto para limpiar ===");
             string inputText = Console.ReadLine();
 
             // Limpieza del texto
@@ -29,11 +29,11 @@ namespace ProyADROMv1
             // Buscar palabras clave en el texto partido
             var matches = FindMatchingRows(cleanedParts, keywords);
 
-            Console.WriteLine("\nFilas que contienen palabras clave:");
-            foreach (var match in matches)
-            {
-                Console.WriteLine($"[Fila {match.Key}] {match.Value}");
-            }
+            //Console.WriteLine("\nFilas que contienen palabras clave:");
+            //foreach (var match in matches)
+            //{
+            //    Console.WriteLine($"[Fila {match.Key}] {match.Value}");
+            //}
 
             // Crear el arreglo final
             List<string> finalResult = new List<string>();
@@ -43,7 +43,7 @@ namespace ProyADROMv1
                 int targetIndex = matches.Keys.Min(); // La primera fila que coincide
                 string targetText = matches[targetIndex];
 
-                Console.WriteLine($"\nAnalizando filas después de la fila {targetIndex}:");
+                //Console.WriteLine($"\nAnalizando filas después de la fila {targetIndex}:");
                 for (int i = 0; i < cleanedParts.Count; i++)
                 {
                     if (i <= targetIndex || CountWords(cleanedParts[i]) > 3)
@@ -69,7 +69,7 @@ namespace ProyADROMv1
             }
 
             // Mostrar el resultado final
-            Console.WriteLine("\nResultado final:");
+            //Console.WriteLine("\nResultado final:");
             foreach (var line in finalResult)
             {
                 Console.WriteLine(line);

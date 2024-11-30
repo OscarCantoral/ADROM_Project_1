@@ -127,19 +127,14 @@ namespace ProyADROMv1.Helpers
                 input.RemoveAt(0);
             }
 
-            // Regla 2: Eliminar contenido dentro de paréntesis
-            for (int i = 0; i < input.Count; i++)
-            {
-                input[i] = RemoveParenthesesContent(input[i]);
-            }
+            //// Regla 2: Eliminar contenido dentro de paréntesis
+            //for (int i = 0; i < input.Count; i++)
+            //{
+            //    input[i] = RemoveParenthesesContent(input[i]);
+            //}
 
             return input;
         }
 
-        private static string RemoveParenthesesContent(string input)
-        {
-            // Expresión regular para eliminar contenido dentro de paréntesis
-            return Regex.Replace(input, @"\s*\(.*?\)\s*", string.Empty).Trim();
-        }
     }
 }
