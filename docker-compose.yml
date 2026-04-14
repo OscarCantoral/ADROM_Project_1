@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      - DB_CONNECTION_STRING=Server=sqlserver;Database=ProyADROM;User Id=sa;Password=Adrom2k7!;TrustServerCertificate=True;
+    entrypoint: ["/bin/sh", "-c", "sleep 60 && dotnet ProyADROMv1.dll"]
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Adrom2k7!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:

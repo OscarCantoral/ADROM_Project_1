@@ -31,9 +31,16 @@ namespace ProyADROMv1.BusinessLogic
 
         public string CleanText(string input, List<Expression> excludedExpressions)
         {
+            if (string.IsNullOrEmpty(input))
+                return input ?? string.Empty;
+                
+            if (excludedExpressions == null)
+                return input;
+                
             foreach (var expression in excludedExpressions)
             {
-                input = input.Replace(expression.Text, "", System.StringComparison.OrdinalIgnoreCase);
+                if (expression?.Text != null)
+                    input = input.Replace(expression.Text, "", System.StringComparison.OrdinalIgnoreCase);
             }
 
             return input.Trim();
