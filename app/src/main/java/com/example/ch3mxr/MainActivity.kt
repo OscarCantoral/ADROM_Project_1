@@ -4,14 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ch3mxr.ui.theme.Ch3mxrTheme
+import androidx.compose.runtime.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +17,26 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Ch3mxrTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                // Estados para controlar la navegación
+                var currentScreen by remember { mutableStateOf("login") }
+
+                // Eliminamos el Scaffold aquí para que el gradiente del Login
+                // ocupe toda la pantalla sin interferencias.
+                when (currentScreen) {
+                    "login" -> {
+                        LoginScreenImproved( // Llamamos a la nueva función
+                            onLoginSuccess = { currentScreen = "home" },
+                            onRegisterClick = { currentScreen = "register" }
+                        )
+                    }
+                    "register" -> {
+                        // Aquí llamarías a tu pantalla de Registro cuando la tengas
+                        // Por ahora, un placeholder:
+                        Text("Pantalla de Registro", color = androidx.compose.ui.graphics.Color.White)
+                    }
+                    "home" -> {
+                        Greeting(name = "Usuario")
+                    }
                 }
             }
         }
