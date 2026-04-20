@@ -36,7 +36,16 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     "home" -> {
-                        Greeting(name = "Usuario")
+                        HomeScreen(
+                            onQuimicaClick = { currentScreen = "quimica" },
+                            onLibresClick = { currentScreen = "home" },
+                            onGruposClick = { currentScreen = "grupos" }
+                        )
+                    }
+                    "quimica" -> {
+                        QuimicaScreen(
+                            onBack = { currentScreen = "home" }
+                        )
                     }
                 }
             }
