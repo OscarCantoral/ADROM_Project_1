@@ -30,9 +30,10 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     "register" -> {
-                        // Aquí llamarías a tu pantalla de Registro cuando la tengas
-                        // Por ahora, un placeholder:
-                        Text("Pantalla de Registro", color = androidx.compose.ui.graphics.Color.White)
+                        RegisterScreen(
+                            onRegisterSuccess = { currentScreen = "login" },
+                            onBackToLogin = { currentScreen = "login" }
+                        )
                     }
                     "home" -> {
                         Greeting(name = "Usuario")
