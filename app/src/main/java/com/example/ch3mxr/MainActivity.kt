@@ -38,8 +38,8 @@ class MainActivity : ComponentActivity() {
                     "home" -> {
                         HomeScreen(
                             onQuimicaClick = { currentScreen = "quimica" },
-                            onLibresClick = { currentScreen = "home" },   // ya estás aquí
-                            onGruposClick = { currentScreen = "grupos" }  // nueva pantalla
+                            onLibresClick = { currentScreen = "home" },
+                            onGruposClick = { currentScreen = "grupos" }
                         )
                     }
                     "quimica" -> {

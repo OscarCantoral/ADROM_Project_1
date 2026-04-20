@@ -78,7 +78,7 @@ fun HomeScreen(
                         color = if (selectedTab == "libres") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
                             selectedTab = "libres"
-                            onLibresClick() // 🔥 navegación
+                            onLibresClick()
                         }
                     )
 
@@ -99,7 +99,7 @@ fun HomeScreen(
                         color = if (selectedTab == "grupos") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
                             selectedTab = "grupos"
-                            onGruposClick() // 🔥 navegación
+                            onGruposClick()
                         }
                     )
 
