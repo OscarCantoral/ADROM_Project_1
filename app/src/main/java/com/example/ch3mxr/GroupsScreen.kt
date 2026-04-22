@@ -5,9 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +17,8 @@ import androidx.compose.ui.unit.dp
 fun GroupsScreen(
     onGrupoClick: (String) -> Unit,
     onLibresClick: () -> Unit,
-    onEditClick: (String) -> Unit
+    onEditClick: (String) -> Unit,
+    onCreateClick: () -> Unit
 ) {
 
     val cyanColor = Color(0xFF0ED2F7)
@@ -43,7 +42,7 @@ fun GroupsScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // 🔹 Título + botón agregar
+            // HEADER
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,16 +53,14 @@ fun GroupsScreen(
             ) {
                 Text("MIS GRUPOS", color = Color.White)
 
-                IconButton(onClick = {
-                    grupos = grupos + "GRUPO ${grupos.size + 1}"
-                }) {
-                    Icon(Icons.Default.Add, contentDescription = null, tint = cyanColor)
+                IconButton(onClick = { onCreateClick() }) {
+                    Icon(Icons.Default.Add, null, tint = cyanColor)
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // 🔹 Lista de grupos
+            // LISTA
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 grupos.forEach { grupo ->
@@ -77,7 +74,6 @@ fun GroupsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        // 📌 Nombre grupo (click → entrar)
                         Text(
                             text = grupo,
                             color = cyanColor,
@@ -86,26 +82,14 @@ fun GroupsScreen(
                                 .clickable { onGrupoClick(grupo) }
                         )
 
-                        // ✏️ EDITAR
-                        IconButton(onClick = {
-                            onEditClick(grupo)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Editar",
-                                tint = cyanColor
-                            )
+                        IconButton(onClick = { onEditClick(grupo) }) {
+                            Icon(Icons.Default.Edit, null, tint = cyanColor)
                         }
 
-                        // 🗑️ ELIMINAR
                         IconButton(onClick = {
                             grupos = grupos.filter { it != grupo }
                         }) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Eliminar",
-                                tint = Color.Red
-                            )
+                            Icon(Icons.Default.Delete, null, tint = Color.Red)
                         }
                     }
                 }
@@ -113,12 +97,13 @@ fun GroupsScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // 🔻 Footer
+            // 🔻 FOOTER (ALINEADO IGUAL QUE HOME)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -129,8 +114,16 @@ fun GroupsScreen(
                             onLibresClick()
                         }
                     )
+
+                    Box(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .width(50.dp)
+                            .background(Color.Transparent)
+                    )
                 }
 
+                // GRUPOS ACTIVO
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "GRUPOS",
