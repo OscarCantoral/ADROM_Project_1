@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.ch3mxr.ui.theme.Ch3mxrTheme
 
 class MainActivity : ComponentActivity() {
@@ -58,6 +55,9 @@ class MainActivity : ComponentActivity() {
                             onEditClick = { grupo ->
                                 selectedGroup = grupo
                                 currentScreen = "editGroup"
+                            },
+                            onCreateClick = {
+                                currentScreen = "createGroup"
                             }
                         )
                     }
@@ -68,24 +68,14 @@ class MainActivity : ComponentActivity() {
                             onBack = { currentScreen = "grupos" }
                         )
                     }
+
+                    "createGroup" -> {
+                        CreateGroupScreen(
+                            onBack = { currentScreen = "grupos" }
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Ch3mxrTheme {
-        Greeting("Android")
     }
 }

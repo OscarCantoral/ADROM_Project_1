@@ -45,7 +45,6 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // 🔹 Botón QUÍMICA
             Button(
                 onClick = { onQuimicaClick() },
                 modifier = Modifier
@@ -63,15 +62,16 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // 🔻 Footer
+            // 🔻 FOOTER (alineado correctamente)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
-                // 🔹 LIBRES
+                // LIBRES
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "LIBRES",
@@ -82,17 +82,17 @@ fun HomeScreen(
                         }
                     )
 
-                    if (selectedTab == "libres") {
-                        Box(
-                            modifier = Modifier
-                                .height(2.dp)
-                                .width(50.dp)
-                                .background(cyanColor)
-                        )
-                    }
+                    Box(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .width(50.dp)
+                            .background(
+                                if (selectedTab == "libres") cyanColor else Color.Transparent
+                            )
+                    )
                 }
 
-                // 🔹 GRUPOS
+                // GRUPOS
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "GRUPOS",
@@ -103,14 +103,14 @@ fun HomeScreen(
                         }
                     )
 
-                    if (selectedTab == "grupos") {
-                        Box(
-                            modifier = Modifier
-                                .height(2.dp)
-                                .width(50.dp)
-                                .background(cyanColor)
-                        )
-                    }
+                    Box(
+                        modifier = Modifier
+                            .height(2.dp)
+                            .width(50.dp)
+                            .background(
+                                if (selectedTab == "grupos") cyanColor else Color.Transparent
+                            )
+                    )
                 }
             }
         }

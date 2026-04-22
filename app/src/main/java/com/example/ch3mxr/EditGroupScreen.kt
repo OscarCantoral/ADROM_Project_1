@@ -23,17 +23,8 @@ fun EditGroupScreen(
     val darkBg = Color(0xFF020617)
 
     var miembros by remember {
-        mutableStateOf(
-            listOf(
-                "Adrian Martinez",
-                "Oscar Cantoral",
-                "Luis Santillan"
-            )
-        )
+        mutableStateOf(listOf("Adrian", "Oscar", "Luis"))
     }
-
-    // 🆕 Input nuevo miembro
-    var nuevoMiembro by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -51,28 +42,13 @@ fun EditGroupScreen(
 
             // 🔹 Título
             Text(
-                text = "EDITAR GRUPO",
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // 🔹 Nombre del grupo
-            Text(
-                text = groupName,
-                color = Color.Gray
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "MIEMBROS",
+                text = "EDITAR GRUPO: $groupName",
                 color = Color.White
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // 🔹 Lista miembros
+            // 🔹 Lista de miembros
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 miembros.forEach { miembro ->
@@ -108,49 +84,31 @@ fun EditGroupScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // 🆕 INPUT para agregar miembro
-            OutlinedTextField(
-                value = nuevoMiembro,
-                onValueChange = { nuevoMiembro = it },
-                placeholder = { Text("Nombre del miembro") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = cyanColor,
-                    unfocusedBorderColor = cyanColor.copy(alpha = 0.5f)
-                )
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
             // ➕ Agregar miembro
             Button(
                 onClick = {
-                    if (nuevoMiembro.isNotBlank() && !miembros.contains(nuevoMiembro)) {
-                        miembros = miembros + nuevoMiembro
-                        nuevoMiembro = "" // limpiar input
-                    }
+                    miembros = miembros + "Nuevo ${miembros.size + 1}"
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = cyanColor)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = cyanColor
+                )
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Agregar")
+                Text("Agregar", color = Color.Black)
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
             // 🔘 Confirmar
             Button(
-                onClick = {
-                    onBack()
-                },
+                onClick = { onBack() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = cyanColor)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = cyanColor
+                )
             ) {
                 Text("CONFIRMAR", color = Color.Black)
             }
