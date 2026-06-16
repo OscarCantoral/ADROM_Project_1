@@ -1,5 +1,8 @@
 package com.example.ch3mxr
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import com.example.ch3mxr.ParticleBackground
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -48,6 +52,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.ui.theme.Octosquares
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -60,8 +65,8 @@ fun LoginScreenImproved(
     // 1. Nombres corregidos (empiezan con minúscula)
     val cyanColor = Color(0xFF0ED2F7)
     val deepBlue = Color(0xFF0F172A)
-    val darkBlueBg = Color(0xFF020617)
-    val appShape = RoundedCornerShape(30.dp)
+    val darkBlueBg = Color(0xFF0B255F)
+    val appShape = RoundedCornerShape(12.dp)
 
     // Estados
     var usuarioState by remember { mutableStateOf("") }
@@ -76,10 +81,15 @@ fun LoginScreenImproved(
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(deepBlue, darkBlueBg) // Uso de nombres corregidos
+                    colors = listOf(
+                        deepBlue,
+                        darkBlueBg
+                    )
                 )
             )
-    ) {
+    )
+    {
+        ParticleBackground()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,13 +101,35 @@ fun LoginScreenImproved(
             Spacer(modifier = Modifier.height(60.dp))
 
             // Logo
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.padding(top = 30.dp)
+            ) {
+
+                LogoGlow()
+
+                Image(
+                    painter = painterResource(
+                        R.drawable.tablet
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(220.dp)
+                )
+
+                AnimatedFlask()
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(160.dp)
+                painter = painterResource(
+                    id = R.drawable.logo_cxrb
+                ),
+                contentDescription = "ChemXR",
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .offset(y = (-35).dp)
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             // Campo Usuario
             OutlinedTextField(
@@ -118,14 +150,19 @@ fun LoginScreenImproved(
                 },
                 shape = appShape, // Uso de nombre corregido
                 colors = OutlinedTextFieldDefaults.colors(
+
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
+
                     focusedBorderColor = cyanColor,
-                    unfocusedBorderColor = cyanColor.copy(alpha = 0.5f)
+                    unfocusedBorderColor = cyanColor.copy(alpha = 0.4f),
+
+                    focusedContainerColor = Color(0xFF18316D).copy(alpha = 0.45f),
+                    unfocusedContainerColor = Color(0xFF18316D).copy(alpha = 0.35f)
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Campo Contraseña
             OutlinedTextField(
@@ -156,71 +193,84 @@ fun LoginScreenImproved(
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = appShape, // Uso de nombre corregido
                 colors = OutlinedTextFieldDefaults.colors(
+
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
+
                     focusedBorderColor = cyanColor,
-                    unfocusedBorderColor = cyanColor.copy(alpha = 0.5f)
+                    unfocusedBorderColor = cyanColor.copy(alpha = 0.4f),
+
+                    focusedContainerColor = Color(0xFF18316D).copy(alpha = 0.45f),
+                    unfocusedContainerColor = Color(0xFF18316D).copy(alpha = 0.35f)
                 )
             )
 
-            Spacer(modifier = Modifier.height(26.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End // Lo alineamos a la derecha
-            ) {
-                TextButton(
-                    onClick = { /* Aquí iría la lógica para recuperar contraseña */ }
-                ) {
-                    Text(
-                        text = "¿Olvidaste tu contraseña?",
-                        color = cyanColor.copy(alpha = 0.8f), // Un poco más tenue
-                        fontSize = 14.sp
-                    )
-                }
-            }
+
 
             if (errorState.isNotEmpty()) {
                 Text(text = errorState, color = Color.Red, modifier = Modifier.padding(top = 8.dp))
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Botón Ingresar
             if (isLoading) {
                 CircularProgressIndicator(color = cyanColor)
             } else {
-                Button(
-                    onClick = {
-                        if (usuarioState.isBlank() || passwordState.isBlank()) {
-                            errorState = "Completa todos los campos"
-                        } else {
-                            isLoading = true
-                            scope.launch {
-                                delay(2000)
-                                if (usuarioState == "admin" && passwordState == "1234") {
-                                    onLoginSuccess()
-                                } else {
-                                    errorState = "Usuario o contraseña incorrectos"
+                if (isLoading) {
+
+                    CircularProgressIndicator(
+                        color = cyanColor
+                    )
+
+                } else {
+
+                    AnimatedGlowButton(
+
+                        text = "Ingresar",
+
+                        onClick = {
+
+                            if (
+                                usuarioState.isBlank() ||
+                                passwordState.isBlank()
+                            ) {
+
+                                errorState =
+                                    "Completa todos los campos"
+
+                            } else {
+
+                                isLoading = true
+
+                                scope.launch {
+
+                                    delay(2000)
+
+                                    if (
+                                        usuarioState == "admin" &&
+                                        passwordState == "1234"
+                                    ) {
+
+                                        onLoginSuccess()
+
+                                    } else {
+
+                                        errorState =
+                                            "Usuario o contraseña incorrectos"
+                                    }
+
+                                    isLoading = false
                                 }
-                                isLoading = false
                             }
                         }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(55.dp),
-                    shape = appShape, // Uso de nombre corregido
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = cyanColor, // Uso de nombre corregido
-                        contentColor = deepBlue // Uso de nombre corregido
                     )
-                ) {
-                    Text("Ingresar", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Botón Registrar
             OutlinedButton(
@@ -234,10 +284,152 @@ fun LoginScreenImproved(
                     contentColor = cyanColor // Uso de nombre corregido
                 )
             ) {
-                Text("Registrar", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                Text("Registrarse", fontSize = 18.sp,
+                    fontFamily = Octosquares, fontWeight = FontWeight.SemiBold)
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End // Lo alineamos a la derecha
+            ) {
+                TextButton(
+                    onClick = { /* Aquí iría la lógica para recuperar contraseña */ }
+                ) {
+                    Text(
+                        text = "¿Olvidaste tu contraseña?",
+                        fontFamily = Octosquares,
+                        color = cyanColor.copy(alpha = 0.8f), // Un poco más tenue
+                        fontSize = 14.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(1.dp)
+                        .background(
+                            Color.White.copy(alpha = 0.15f)
+                        )
+                )
+
+                Text(
+                    text = " O CONTINÚA CON ",
+                    color = Color.White.copy(alpha = 0.5f),
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(1.dp)
+                        .background(
+                            Color.White.copy(alpha = 0.15f)
+                        )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+
+                OutlinedButton(
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFFE5E7EB)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    )
+                ) {
+
+                    Icon(
+                        painter = painterResource(
+                            R.drawable.ic_google
+                        ),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(18.dp)
+                    )
+
+                    Text(
+                        text = " Google",
+                        color = Color.Black
+                    )
+                }
+
+                OutlinedButton(
+                    onClick = { },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFFE5E7EB)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            R.drawable.ic_microsoft
+                        ),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(18.dp)
+                    )
+
+                    Text(
+                        text = " Microsoft",
+                        color = Color.Black
+                    )
+                }
+            }
         }
+    }
+}
+
+@Composable
+fun LogoGlow() {
+
+    Canvas(
+        modifier = Modifier
+            .size(220.dp)
+    ) {
+
+        drawCircle(
+            brush = Brush.radialGradient(
+                colors = listOf(
+                    Color(0xFF29D3FF).copy(alpha = 2.00f),
+                    Color(0xFF29D3FF).copy(alpha = 0.10f),
+                    Color.Transparent
+                ),
+                center = Offset(
+                    size.width / 2,
+                    size.height / 2
+                ),
+                radius = size.minDimension / 2
+            ),
+            radius = size.minDimension / 2,
+            center = Offset(
+                size.width / 2,
+                size.height / 2
+            )
+        )
     }
 }
