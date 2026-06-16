@@ -103,7 +103,7 @@ fun LoginScreenImproved(
             // Logo
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(top = 30.dp)
+                modifier = Modifier.padding(top = 33.dp)
             ) {
 
                 LogoGlow()

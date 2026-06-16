@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style
+        name="Theme.Ch3mxr"
+        parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">
+            #0F172A
+        </item>
+
+        <item name="windowSplashScreenAnimatedIcon">
+            @drawable/icon_cxr2
+        </item>
+
+        <item name="postSplashScreenTheme">
+            @style/Theme.Ch3mxr.Main
+        </item>
+
+    </style>
+
+    <style
+        name="Theme.Ch3mxr.Main"
+        parent="android:Theme.Material.Light.NoActionBar"/>
+
+</resources>
