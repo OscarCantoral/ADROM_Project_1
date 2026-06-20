@@ -15,18 +15,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val googleAuthManager = GoogleAuthManager(this)
+
         setContent {
             Ch3mxrTheme {
 
-                var currentScreen by remember { mutableStateOf("login") }
+                var currentScreen by remember { mutableStateOf("loading") }
                 var selectedGroup by remember { mutableStateOf("") }
 
                 when (currentScreen) {
 
+                    "loading" -> {
+                        LaunchedEffect(Unit) {
+                            val credential = googleAuthManager.tryAutoSignIn()
+                            currentScreen = if (credential != null) "home" else "login"
+                        }
+                    }
+
                     "login" -> {
                         LoginScreenImproved(
                             onLoginSuccess = { currentScreen = "home" },
-                            onRegisterClick = { currentScreen = "register" }
+                            onRegisterClick = { currentScreen = "register" },
+                            googleAuthManager = googleAuthManager
                         )
                     }
 

@@ -60,7 +60,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreenImproved(
     onLoginSuccess: () -> Unit,
-    onRegisterClick: () -> Unit
+    onRegisterClick: () -> Unit,
+    googleAuthManager: GoogleAuthManager
 ) {
     // 1. Nombres corregidos (empiezan con minúscula)
     val cyanColor = Color(0xFF0ED2F7)
@@ -344,7 +345,19 @@ fun LoginScreenImproved(
             ) {
 
                 OutlinedButton(
-                    onClick = { },
+                    onClick = {
+                        scope.launch {
+                            isLoading = true
+                            errorState = ""
+                            val credential = googleAuthManager.signInWithGoogle()
+                            isLoading = false
+                            if (credential != null) {
+                                onLoginSuccess()
+                            } else {
+                                errorState = "Error al iniciar sesión con Google"
+                            }
+                        }
+                    },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
                     border = BorderStroke(
