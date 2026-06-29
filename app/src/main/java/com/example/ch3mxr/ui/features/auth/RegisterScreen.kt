@@ -1,4 +1,4 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.ui.features.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

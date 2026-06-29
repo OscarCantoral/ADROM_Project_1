@@ -1,11 +1,10 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.ui.features.splash
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +15,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.ui.components.AnimatedFlask
+import com.example.ch3mxr.ui.features.auth.LogoGlow
+import com.example.ch3mxr.ui.features.main.ParticleBackground
 import com.example.ch3mxr.ui.theme.Octosquares
 import kotlinx.coroutines.delay
 

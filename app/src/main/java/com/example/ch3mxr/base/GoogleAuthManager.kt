@@ -1,4 +1,4 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.base
 
 import android.content.Context
 import android.util.Base64
@@ -9,6 +9,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
+import com.example.ch3mxr.Config
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -44,11 +45,11 @@ class GoogleAuthManager(private val context: Context) {
     }
 
     suspend fun signInWithGoogle(): GoogleIdTokenCredential? {
-        val signInWithGoogleOption: GetSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(
-            serverClientId = Config.WEB_CLIENT_ID
-        )
-            .setNonce(generateSecureRandomNonce())
-            .build()
+        Log.i("REQUEST TO LOG IN WITH GOOGLE","REQUEST TO LOG IN WITH GOOGLE")
+        val signInWithGoogleOption: GetSignInWithGoogleOption =
+            GetSignInWithGoogleOption.Builder(serverClientId = Config.WEB_CLIENT_ID)
+                .setNonce(generateSecureRandomNonce())
+                .build()
 
         val request: GetCredentialRequest = GetCredentialRequest.Builder()
             .addCredentialOption(signInWithGoogleOption)
@@ -56,6 +57,7 @@ class GoogleAuthManager(private val context: Context) {
 
         return try {
             val result = credentialManager.getCredential(context, request)
+            Log.i("RESULT GOOGLE AUTH", result.toString())
             handleSignInResponse(result)
         } catch (e: GetCredentialException) {
             Log.e("GoogleAuth", "Sign in failed", e)

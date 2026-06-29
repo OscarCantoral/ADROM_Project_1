@@ -1,4 +1,4 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.ui.features.main
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize

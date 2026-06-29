@@ -1,8 +1,7 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.ui.features.auth
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
-import com.example.ch3mxr.ParticleBackground
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +24,6 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +50,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.R
+import com.example.ch3mxr.base.GoogleAuthManager
+import com.example.ch3mxr.ui.components.AnimatedFlask
+import com.example.ch3mxr.ui.components.AnimatedGlowButton
+import com.example.ch3mxr.ui.features.main.ParticleBackground
 import com.example.ch3mxr.ui.theme.Octosquares
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -350,12 +353,12 @@ fun LoginScreenImproved(
                             isLoading = true
                             errorState = ""
                             val credential = googleAuthManager.signInWithGoogle()
-                            isLoading = false
                             if (credential != null) {
                                 onLoginSuccess()
                             } else {
                                 errorState = "Error al iniciar sesión con Google"
                             }
+                            isLoading = false
                         }
                     },
                     modifier = Modifier.weight(1f),

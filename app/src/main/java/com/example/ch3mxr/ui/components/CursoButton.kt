@@ -1,4 +1,4 @@
-package com.example.ch3mxr
+package com.example.ch3mxr.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
