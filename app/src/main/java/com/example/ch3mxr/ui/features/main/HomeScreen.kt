@@ -11,6 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import com.example.ch3mxr.ui.components.CourseCard
+import com.example.ch3mxr.R
 
 @Composable
 fun HomeScreen(
@@ -24,6 +29,34 @@ fun HomeScreen(
 
     var selectedTab by remember { mutableStateOf("libres") }
 
+    val cursos = listOf(
+
+        Triple(
+            "Química",
+            "Átomos, moléculas y enlaces",
+            R.drawable.fond_curs_quim
+        ),
+
+        Triple(
+            "Biología",
+            "Células, tejidos y genética",
+            R.drawable.fond_curs_biol
+        ),
+
+        Triple(
+            "Matemáticas",
+            "Álgebra, geometría y cálculo",
+            R.drawable.fond_curs_mate
+        ),
+
+        Triple(
+            "Historia",
+            "Historia Universal",
+            R.drawable.fond_curs_hist
+        )
+
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +65,9 @@ fun HomeScreen(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -45,22 +80,37 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            Button(
-                onClick = { onQuimicaClick() },
-                modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .height(60.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,
-                    contentColor = cyanColor
-                ),
-                border = BorderStroke(1.dp, cyanColor)
+            LazyColumn(
+
+                modifier = Modifier.weight(1f),
+
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+
             ) {
-                Text("QUIMICA")
+
+                items(cursos) { curso ->
+
+                    CourseCard(
+
+                        titulo = curso.first,
+
+                        descripcion = curso.second,
+
+                        imagen = curso.third,
+
+                        onClick = {
+
+                            if (curso.first == "Química")
+                                onQuimicaClick()
+
+                        }
+
+                    )
+
+                }
+
             }
 
-            Spacer(modifier = Modifier.weight(1f))
 
             // 🔻 FOOTER (alineado correctamente)
             Row(
@@ -74,7 +124,7 @@ fun HomeScreen(
                 // LIBRES
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "LIBRES",
+                        text = "PUBLICO",
                         color = if (selectedTab == "libres") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
                             selectedTab = "libres"
@@ -95,7 +145,7 @@ fun HomeScreen(
                 // GRUPOS
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "GRUPOS",
+                        text = "PRIVADOS",
                         color = if (selectedTab == "grupos") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
                             selectedTab = "grupos"

@@ -36,7 +36,9 @@ fun GroupsScreen(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -95,13 +97,12 @@ fun GroupsScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
 
             // 🔻 FOOTER (ALINEADO IGUAL QUE HOME)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp),
+                    .offset(y = (-25).dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -126,7 +127,7 @@ fun GroupsScreen(
                 // GRUPOS ACTIVO
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "GRUPOS",
+                        text = "PRIVADOS",
                         color = cyanColor
                     )
 

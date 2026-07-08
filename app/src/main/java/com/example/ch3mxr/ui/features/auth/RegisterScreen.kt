@@ -1,5 +1,6 @@
 package com.example.ch3mxr.ui.features.auth
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,10 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.ui.features.main.ParticleBackground
+import com.example.ch3mxr.ui.theme.Octosquares
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -28,7 +32,7 @@ fun RegisterScreen(
 
     val cyanColor = Color(0xFF0ED2F7)
     val deepBlue = Color(0xFF0F172A)
-    val darkBlueBg = Color(0xFF020617)
+    val darkBlueBg = Color(0xFF0B255F)
     val appShape = RoundedCornerShape(30.dp)
 
     var usuario by remember { mutableStateOf("") }
@@ -53,7 +57,7 @@ fun RegisterScreen(
                 )
             )
     ) {
-
+        ParticleBackground()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -185,19 +189,22 @@ fun RegisterScreen(
                         .fillMaxWidth()
                         .height(55.dp),
                     shape = appShape,
+                    border = BorderStroke(2.dp, cyanColor),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = cyanColor,
                         contentColor = deepBlue
                     )
                 ) {
-                    Text("Registrar")
+                    Text("Registrarse", fontSize = 18.sp,
+                        fontFamily = Octosquares, fontWeight = FontWeight.SemiBold)
                 }
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
             TextButton(onClick = { onBackToLogin() }) {
-                Text("Volver al login", color = cyanColor)
+                Text("Volver al login", fontSize = 18.sp, color = cyanColor,
+                    fontFamily = Octosquares, fontWeight = FontWeight.SemiBold)
             }
 
             Spacer(modifier = Modifier.height(30.dp))

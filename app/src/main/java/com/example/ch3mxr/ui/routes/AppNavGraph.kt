@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.ch3mxr.base.GoogleAuthManager
+import com.example.ch3mxr.ui.features.splash.LoadingScreen
 
 fun NavGraphBuilder.appGraph(
     navController: NavHostController
@@ -20,6 +21,10 @@ fun NavGraphBuilder.appGraph(
             val googleAuthManager = remember {
                 GoogleAuthManager(context)
             }
+
+            // Mostrar la pantalla de carga
+            LoadingScreen()
+
             LaunchedEffect(Unit) {
                 val credential =
                     googleAuthManager.tryAutoSignIn()
