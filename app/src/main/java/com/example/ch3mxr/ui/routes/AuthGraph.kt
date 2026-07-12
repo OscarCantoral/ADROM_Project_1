@@ -1,11 +1,13 @@
 package com.example.ch3mxr.ui.routes
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.ch3mxr.base.FacebookAuthManager
 import com.example.ch3mxr.base.GoogleAuthManager
 import com.example.ch3mxr.ui.features.auth.LoginScreenImproved
 import com.example.ch3mxr.ui.features.auth.RegisterScreen
@@ -19,8 +21,21 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
             val googleAuthManager = remember {
                 GoogleAuthManager(context)
             }
+            val facebookAuthManager = remember {
+                FacebookAuthManager().also { it.init() }
+            }
+
+            LaunchedEffect(Unit) {
+                facebookAuthManager.onLoginSuccess = { token, userId ->
+                    navController.navigate(Graph.Main) {
+                        popUpTo(Graph.Auth) { inclusive = true }
+                    }
+                }
+            }
+
             LoginScreenImproved(
                 googleAuthManager = googleAuthManager,
+                facebookAuthManager = facebookAuthManager,
                 onLoginSuccess = {
                     navController.navigate(Graph.Main) {
                         popUpTo(Graph.Auth) {

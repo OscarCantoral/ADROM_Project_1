@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -51,6 +52,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ch3mxr.R
+import com.example.ch3mxr.base.FacebookAuthManager
 import com.example.ch3mxr.base.GoogleAuthManager
 import com.example.ch3mxr.ui.components.AnimatedFlask
 import com.example.ch3mxr.ui.components.AnimatedGlowButton
@@ -64,7 +66,8 @@ import kotlinx.coroutines.launch
 fun LoginScreenImproved(
     onLoginSuccess: () -> Unit,
     onRegisterClick: () -> Unit,
-    googleAuthManager: GoogleAuthManager
+    googleAuthManager: GoogleAuthManager,
+    facebookAuthManager: FacebookAuthManager
 ) {
     // 1. Nombres corregidos (empiezan con minúscula)
     val cyanColor = Color(0xFF0ED2F7)
@@ -79,6 +82,7 @@ fun LoginScreenImproved(
     var passwordVisible by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val activity = LocalContext.current as android.app.Activity
 
     Box(
         modifier = Modifier
@@ -389,7 +393,9 @@ fun LoginScreenImproved(
                 }
 
                 OutlinedButton(
-                    onClick = { },
+                    onClick = {
+                        facebookAuthManager.signInWithFacebook(activity)
+                    },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(12.dp),
                     border = BorderStroke(
@@ -403,7 +409,7 @@ fun LoginScreenImproved(
                 ) {
                     Icon(
                         painter = painterResource(
-                            R.drawable.ic_microsoft
+                            R.drawable.ic_facebook
                         ),
                         contentDescription = null,
                         tint = Color.Unspecified,
@@ -411,7 +417,7 @@ fun LoginScreenImproved(
                     )
 
                     Text(
-                        text = " Microsoft",
+                        text = " Facebook",
                         color = Color.Black
                     )
                 }

@@ -22,6 +22,7 @@ hilt = "2.59.2"
 retrofit = "3.0.0"
 navigationCompose = "2.9.4"
 kotlinxSerialization = "1.9.0"
+facebookLogin = "17.0.1"
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
@@ -51,6 +52,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+facebook-login = { module = "com.facebook.android:facebook-login", version.ref = "facebookLogin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
