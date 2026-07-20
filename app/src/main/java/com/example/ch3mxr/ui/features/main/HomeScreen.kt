@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,7 +18,8 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     onQuimicaClick: () -> Unit,
     onLibresClick: () -> Unit,
-    onGruposClick: () -> Unit
+    onGruposClick: () -> Unit,
+    onLogoutClick: () -> Unit = {}
 ) {
 
     val cyanColor = Color(0xFF0ED2F7)
@@ -36,12 +39,24 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "CURSOS",
+                    color = Color.White
+                )
 
-            Text(
-                text = "CURSOS",
-                color = Color.White
-            )
+                IconButton(onClick = onLogoutClick) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = "Cerrar sesión",
+                        tint = Color.Red.copy(alpha = 0.8f)
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(40.dp))
 

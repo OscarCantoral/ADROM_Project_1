@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import com.example.ch3mxr.R
 import com.example.ch3mxr.base.FacebookAuthManager
 import com.example.ch3mxr.base.GoogleAuthManager
+import com.example.ch3mxr.base.SessionData
 import com.example.ch3mxr.ui.components.AnimatedFlask
 import com.example.ch3mxr.ui.components.AnimatedGlowButton
 import com.example.ch3mxr.ui.features.main.ParticleBackground
@@ -64,7 +65,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreenImproved(
-    onLoginSuccess: () -> Unit,
+    onLoginSuccess: (SessionData) -> Unit,
     onRegisterClick: () -> Unit,
     googleAuthManager: GoogleAuthManager,
     facebookAuthManager: FacebookAuthManager
@@ -262,7 +263,13 @@ fun LoginScreenImproved(
                                         passwordState == "1234"
                                     ) {
 
-                                        onLoginSuccess()
+                                        onLoginSuccess(
+                                            SessionData(
+                                                authProvider = "manual",
+                                                usuario = usuarioState,
+                                                nombre = "Admin"
+                                            )
+                                        )
 
                                     } else {
 
@@ -358,7 +365,17 @@ fun LoginScreenImproved(
                             errorState = ""
                             val credential = googleAuthManager.signInWithGoogle()
                             if (credential != null) {
-                                onLoginSuccess()
+                                onLoginSuccess(
+                                    SessionData(
+                                        authProvider = "google",
+                                        token = credential.idToken ?: "",
+                                        userId = credential.id,
+                                        email = "",
+                                        nombre = credential.displayName ?: "",
+                                        apellido = credential.familyName ?: "",
+                                        fotoUrl = credential.profilePictureUri?.toString() ?: ""
+                                    )
+                                )
                             } else {
                                 errorState = "Error al iniciar sesión con Google"
                             }

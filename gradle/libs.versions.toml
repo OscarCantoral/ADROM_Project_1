@@ -23,6 +23,7 @@ retrofit = "3.0.0"
 navigationCompose = "2.9.4"
 kotlinxSerialization = "1.9.0"
 facebookLogin = "17.0.1"
+datastore = "1.1.7"
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
@@ -53,6 +54,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 facebook-login = { module = "com.facebook.android:facebook-login", version.ref = "facebookLogin" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
