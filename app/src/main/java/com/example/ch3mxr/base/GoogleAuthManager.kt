@@ -20,30 +20,6 @@ class GoogleAuthManager(private val context: Context) {
 
     private val credentialManager = CredentialManager.create(context)
 
-    suspend fun tryAutoSignIn(): GoogleIdTokenCredential? {
-        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
-            .setServerClientId(Config.WEB_CLIENT_ID)
-            .setAutoSelectEnabled(true)
-            .setNonce(generateSecureRandomNonce())
-            .build()
-
-        val request: GetCredentialRequest = GetCredentialRequest.Builder()
-            .addCredentialOption(googleIdOption)
-            .build()
-
-        return try {
-            val result = credentialManager.getCredential(context, request)
-            handleSignInResponse(result)
-        } catch (e: NoCredentialException) {
-            Log.d("GoogleAuth", "No authorized accounts found", e)
-            null
-        } catch (e: GetCredentialException) {
-            Log.e("GoogleAuth", "Get credential failed", e)
-            null
-        }
-    }
-
     suspend fun signInWithGoogle(): GoogleIdTokenCredential? {
         Log.i("REQUEST TO LOG IN WITH GOOGLE","REQUEST TO LOG IN WITH GOOGLE")
         val signInWithGoogleOption: GetSignInWithGoogleOption =
