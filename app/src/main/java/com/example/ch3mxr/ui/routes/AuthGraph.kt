@@ -11,19 +11,18 @@ import androidx.navigation.navigation
 import com.example.ch3mxr.base.FacebookAuthManager
 import com.example.ch3mxr.base.GoogleAuthManager
 import com.example.ch3mxr.base.SessionData
-import com.example.ch3mxr.base.SessionManager
 import com.example.ch3mxr.ui.features.auth.LoginScreenImproved
 import com.example.ch3mxr.ui.features.auth.RegisterScreen
+import com.example.ch3mxr.ui.features.splash.SessionViewModel
 import kotlinx.coroutines.launch
 
-fun NavGraphBuilder.authGraph(navController: NavHostController) {
+fun NavGraphBuilder.authGraph(navController: NavHostController,sessionViewModel: SessionViewModel) {
     navigation<Graph.Auth>(
         startDestination = Routes.Login
     ) {
         composable<Routes.Login> {
             val context = LocalContext.current
             val scope = rememberCoroutineScope()
-            val sessionManager = remember { SessionManager(context) }
             val googleAuthManager = remember {
                 GoogleAuthManager(context)
             }
@@ -39,7 +38,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
                         userId = userId
                     )
                     scope.launch {
-                        sessionManager.saveSession(session)
+                        sessionViewModel.saveSession(session)
                     }
                     navController.navigate(Graph.Main) {
                         popUpTo(Graph.Auth) { inclusive = true }
@@ -52,7 +51,7 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
                 facebookAuthManager = facebookAuthManager,
                 onLoginSuccess = { sessionData ->
                     scope.launch {
-                        sessionManager.saveSession(sessionData)
+                        sessionViewModel.saveSession(sessionData)
                     }
                     navController.navigate(Graph.Main) {
                         popUpTo(Graph.Auth) {

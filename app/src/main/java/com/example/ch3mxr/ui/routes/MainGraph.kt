@@ -1,33 +1,26 @@
 package com.example.ch3mxr.ui.routes
 
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.example.ch3mxr.base.SessionManager
 import com.example.ch3mxr.ui.features.main.CreateGroupScreen
 import com.example.ch3mxr.ui.features.main.EditGroupScreen
 import com.example.ch3mxr.ui.features.main.GroupsScreen
 import com.example.ch3mxr.ui.features.main.HomeScreen
 import com.example.ch3mxr.ui.features.main.QuimicaScreen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.ch3mxr.ui.features.splash.SessionViewModel
 
 fun NavGraphBuilder.mainGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: SessionViewModel
 ) {
 
     navigation<Graph.Main>(
         startDestination = Routes.Home
     ) {
         composable<Routes.Home> {
-            val context = LocalContext.current
-            val sessionManager = remember { SessionManager(context) }
-
             HomeScreen(
                 onQuimicaClick = {
                     navController.navigate(Routes.Quimica)
@@ -37,9 +30,7 @@ fun NavGraphBuilder.mainGraph(
                     navController.navigate(Routes.Groups)
                 },
                 onLogoutClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sessionManager.clearSession()
-                    }
+                    viewModel.clearSession()
                     navController.navigate(Graph.Auth) {
                         popUpTo(Graph.Main) {
                             inclusive = true
@@ -70,10 +61,7 @@ fun NavGraphBuilder.mainGraph(
                     )
                 },
                 onLogoutClick = {
-                    val ctx = navController.context
-                    CoroutineScope(Dispatchers.IO).launch {
-                        SessionManager(ctx).clearSession()
-                    }
+                    viewModel.clearSession()
                     navController.navigate(Graph.Auth) {
                         popUpTo(Graph.Main) {
                             inclusive = true

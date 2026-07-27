@@ -1,20 +1,23 @@
 package com.example.ch3mxr.ui.features
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.ch3mxr.ui.features.splash.SessionViewModel
 import com.example.ch3mxr.ui.routes.Graph
 import com.example.ch3mxr.ui.routes.appGraph
 import com.example.ch3mxr.ui.routes.authGraph
 import com.example.ch3mxr.ui.routes.mainGraph
 
 @Composable
-fun App(){
+fun App() {
     val navController = rememberNavController()
+    val sessionViewModel: SessionViewModel = hiltViewModel()
 
     NavHost(navController, startDestination = Graph.App) {
-        appGraph(navController)
-        authGraph(navController)
-        mainGraph(navController)
+        appGraph(navController, sessionViewModel)
+        authGraph(navController, sessionViewModel)
+        mainGraph(navController, sessionViewModel)
     }
 }

@@ -25,7 +25,6 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     onFinished: () -> Unit
 ) {
-
     var startAnimation by remember {
         mutableStateOf(false)
     }
