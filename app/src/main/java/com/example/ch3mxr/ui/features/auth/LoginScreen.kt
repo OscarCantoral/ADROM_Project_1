@@ -52,9 +52,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ch3mxr.R
-import com.example.ch3mxr.base.FacebookAuthManager
-import com.example.ch3mxr.base.GoogleAuthManager
-import com.example.ch3mxr.base.SessionData
+import com.example.ch3mxr.ui.manager.FacebookAuthManager
+import com.example.ch3mxr.ui.manager.GoogleAuthManager
+import com.example.ch3mxr.data.domain.SessionData
 import com.example.ch3mxr.ui.components.AnimatedFlask
 import com.example.ch3mxr.ui.components.AnimatedGlowButton
 import com.example.ch3mxr.ui.features.main.ParticleBackground

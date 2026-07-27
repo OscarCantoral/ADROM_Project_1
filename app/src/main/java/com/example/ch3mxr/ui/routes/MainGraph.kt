@@ -10,7 +10,7 @@ import com.example.ch3mxr.ui.features.main.EditGroupScreen
 import com.example.ch3mxr.ui.features.main.GroupsScreen
 import com.example.ch3mxr.ui.features.main.HomeScreen
 import com.example.ch3mxr.ui.features.main.QuimicaScreen
-import com.example.ch3mxr.ui.features.splash.SessionViewModel
+import com.example.ch3mxr.ui.features.SessionViewModel
 
 fun NavGraphBuilder.mainGraph(
     navController: NavHostController,

@@ -4,7 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.ch3mxr.base.SessionData
+import com.example.ch3mxr.data.domain.SessionData
 import com.google.gson.Gson
 import jakarta.inject.Inject
 import jakarta.inject.Singleton

@@ -1,4 +1,4 @@
-package com.example.ch3mxr.base
+package com.example.ch3mxr.ui.manager
 
 import android.app.Activity
 import android.content.Intent
