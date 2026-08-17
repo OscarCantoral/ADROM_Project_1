@@ -8,12 +8,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.ui.components.PdfComponent
 
 @Composable
 fun QuimicaScreen(
@@ -27,6 +32,7 @@ fun QuimicaScreen(
 
     // Color oficial que quieres usar para PDF
     val pdfRed = Color(0xFFDC3129)
+    var isOpened: Boolean by remember {mutableStateOf(false)}
 
     Box(
         modifier = Modifier
@@ -34,6 +40,7 @@ fun QuimicaScreen(
             .background(darkBg)
     ) {
 
+        PdfComponent(isOpened)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -163,9 +170,8 @@ fun QuimicaScreen(
                     .fillMaxWidth()
                     .height(82.dp)
                     .clickable {
-
                         // Aquí después abriremos el PDF
-
+                        isOpened = true
                     },
                 shape = RoundedCornerShape(20.dp),
                 color = pdfRed,
