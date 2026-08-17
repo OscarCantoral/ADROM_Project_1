@@ -18,7 +18,8 @@ fun GroupsScreen(
     onGrupoClick: (String) -> Unit,
     onLibresClick: () -> Unit,
     onEditClick: (String) -> Unit,
-    onCreateClick: () -> Unit
+    onCreateClick: () -> Unit,
+    onLogoutClick: () -> Unit
 ) {
 
     val cyanColor = Color(0xFF0ED2F7)

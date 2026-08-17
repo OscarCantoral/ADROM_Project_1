@@ -10,9 +10,11 @@ import com.example.ch3mxr.ui.features.main.EditGroupScreen
 import com.example.ch3mxr.ui.features.main.GroupsScreen
 import com.example.ch3mxr.ui.features.main.HomeScreen
 import com.example.ch3mxr.ui.features.main.QuimicaScreen
+import com.example.ch3mxr.ui.features.SessionViewModel
 
 fun NavGraphBuilder.mainGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: SessionViewModel
 ) {
 
     navigation<Graph.Main>(
@@ -26,6 +28,14 @@ fun NavGraphBuilder.mainGraph(
                 onLibresClick = {},
                 onGruposClick = {
                     navController.navigate(Routes.Groups)
+                },
+                onLogoutClick = {
+                    viewModel.clearSession()
+                    navController.navigate(Graph.Auth) {
+                        popUpTo(Graph.Main) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -49,6 +59,14 @@ fun NavGraphBuilder.mainGraph(
                     navController.navigate(
                         Routes.EditGroup(group)
                     )
+                },
+                onLogoutClick = {
+                    viewModel.clearSession()
+                    navController.navigate(Graph.Auth) {
+                        popUpTo(Graph.Main) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

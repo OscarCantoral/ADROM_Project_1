@@ -1,4 +1,4 @@
-package com.example.ch3mxr.base
+package com.example.ch3mxr.ui.manager
 
 import android.content.Context
 import android.util.Base64
@@ -8,9 +8,7 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.credentials.exceptions.NoCredentialException
 import com.example.ch3mxr.Config
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -19,30 +17,6 @@ import java.security.SecureRandom
 class GoogleAuthManager(private val context: Context) {
 
     private val credentialManager = CredentialManager.create(context)
-
-    suspend fun tryAutoSignIn(): GoogleIdTokenCredential? {
-        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
-            .setServerClientId(Config.WEB_CLIENT_ID)
-            .setAutoSelectEnabled(true)
-            .setNonce(generateSecureRandomNonce())
-            .build()
-
-        val request: GetCredentialRequest = GetCredentialRequest.Builder()
-            .addCredentialOption(googleIdOption)
-            .build()
-
-        return try {
-            val result = credentialManager.getCredential(context, request)
-            handleSignInResponse(result)
-        } catch (e: NoCredentialException) {
-            Log.d("GoogleAuth", "No authorized accounts found", e)
-            null
-        } catch (e: GetCredentialException) {
-            Log.e("GoogleAuth", "Get credential failed", e)
-            null
-        }
-    }
 
     suspend fun signInWithGoogle(): GoogleIdTokenCredential? {
         Log.i("REQUEST TO LOG IN WITH GOOGLE","REQUEST TO LOG IN WITH GOOGLE")
@@ -87,4 +61,5 @@ class GoogleAuthManager(private val context: Context) {
         random.nextBytes(bytes)
         return Base64.encodeToString(bytes, Base64.NO_PADDING or Base64.NO_WRAP or Base64.URL_SAFE)
     }
+
 }
