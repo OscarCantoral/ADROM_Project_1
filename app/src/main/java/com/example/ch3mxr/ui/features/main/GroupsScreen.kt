@@ -1,11 +1,13 @@
 package com.example.ch3mxr.ui.features.main
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +27,8 @@ fun GroupsScreen(
     val cyanColor = Color(0xFF0ED2F7)
     val darkBg = Color(0xFF020617)
 
+    var selectedTab by remember { mutableStateOf("grupos") }
+
     var grupos by remember {
         mutableStateOf(listOf("GRUPO ESTUDIOS"))
     }
@@ -43,63 +47,95 @@ fun GroupsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(40.dp))
-
-            // HEADER
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Black, RoundedCornerShape(12.dp))
-                    .padding(12.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("MIS GRUPOS", color = Color.White)
+                Text(
+                    text = "MIS GRUPOS",
+                    color = Color.White
+                )
 
-                IconButton(onClick = { onCreateClick() }) {
-                    Icon(Icons.Default.Add, null, tint = cyanColor)
+                IconButton(onClick = onLogoutClick) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = "Cerrar sesión",
+                        tint = Color.Red.copy(alpha = 0.8f)
+                    )
                 }
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Button(
+                onClick = { onCreateClick() },
+                modifier = Modifier
+                    .fillMaxWidth(0.7f)
+                    .height(60.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = cyanColor
+                ),
+                border = BorderStroke(1.dp, cyanColor)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    tint = cyanColor,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("CREAR GRUPO")
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // LISTA
-            Column(modifier = Modifier.fillMaxWidth()) {
-
-                grupos.forEach { grupo ->
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                            .background(Color.Black, RoundedCornerShape(12.dp))
-                            .padding(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Text(
-                            text = grupo,
-                            color = cyanColor,
+            if (grupos.isNotEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    grupos.forEach { grupo ->
+                        Card(
                             modifier = Modifier
-                                .weight(1f)
-                                .clickable { onGrupoClick(grupo) }
-                        )
+                                .fillMaxWidth()
+                                .clickable { onGrupoClick(grupo) },
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Black
+                            ),
+                            border = BorderStroke(1.dp, cyanColor.copy(alpha = 0.3f))
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = grupo,
+                                    color = cyanColor,
+                                    modifier = Modifier.weight(1f)
+                                )
 
-                        IconButton(onClick = { onEditClick(grupo) }) {
-                            Icon(Icons.Default.Edit, null, tint = cyanColor)
-                        }
-
-                        IconButton(onClick = {
-                            grupos = grupos.filter { it != grupo }
-                        }) {
-                            Icon(Icons.Default.Delete, null, tint = Color.Red)
+                                IconButton(onClick = { onEditClick(grupo) }) {
+                                    Icon(Icons.Default.Add, null, tint = cyanColor)
+                                }
+                            }
                         }
                     }
                 }
+            } else {
+                Spacer(modifier = Modifier.height(40.dp))
+                Text(
+                    text = "No tienes grupos aún",
+                    color = Color.Gray
+                )
             }
 
 
-            // 🔻 FOOTER (ALINEADO IGUAL QUE HOME)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -111,8 +147,9 @@ fun GroupsScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "LIBRES",
-                        color = Color.Gray,
+                        color = if (selectedTab == "libres") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
+                            selectedTab = "libres"
                             onLibresClick()
                         }
                     )
@@ -121,11 +158,12 @@ fun GroupsScreen(
                         modifier = Modifier
                             .height(2.dp)
                             .width(50.dp)
-                            .background(Color.Transparent)
+                            .background(
+                                if (selectedTab == "libres") cyanColor else Color.Transparent
+                            )
                     )
                 }
 
-                // GRUPOS ACTIVO
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "PRIVADOS",
@@ -136,7 +174,9 @@ fun GroupsScreen(
                         modifier = Modifier
                             .height(2.dp)
                             .width(50.dp)
-                            .background(cyanColor)
+                            .background(
+                                if (selectedTab == "grupos") cyanColor else Color.Transparent
+                            )
                     )
                 }
             }
