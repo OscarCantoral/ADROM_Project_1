@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -59,7 +59,7 @@ fun GroupsScreen(
 
                 IconButton(onClick = onLogoutClick) {
                     Icon(
-                        imageVector = Icons.Default.Logout,
+                        imageVector = Icons.AutoMirrored.Filled.Logout,
                         contentDescription = "Cerrar sesión",
                         tint = Color.Red.copy(alpha = 0.8f)
                     )
@@ -135,18 +135,18 @@ fun GroupsScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = (-25).dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "LIBRES",
+                        text = "PUBLICO",
                         color = if (selectedTab == "libres") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
                             selectedTab = "libres"
