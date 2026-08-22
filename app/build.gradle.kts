@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.android.pdf.viewer)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

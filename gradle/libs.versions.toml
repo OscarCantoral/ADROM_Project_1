@@ -1,5 +1,6 @@
 [versions]
 agp = "9.1.1"
+androidPdfViewer = "3.2.0-beta.3"
 converterGson = "3.0.0"
 coreKtx = "1.18.0"
 coreSplashscreen = "1.2.0"
@@ -26,6 +27,7 @@ facebookLogin = "17.0.1"
 datastore = "1.1.7"
 
 [libraries]
+android-pdf-viewer = { module = "com.github.mhiew:android-pdf-viewer", version.ref = "androidPdfViewer" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

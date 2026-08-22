@@ -40,7 +40,6 @@ fun QuimicaScreen(
             .background(darkBg)
     ) {
 
-        PdfComponent(isOpened)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -320,6 +319,11 @@ fun QuimicaScreen(
                 }
             }
         }
+
+        PdfComponent(
+            isOpened = isOpened,
+            onClose = { isOpened = false }
+        )
     }
 }
 
