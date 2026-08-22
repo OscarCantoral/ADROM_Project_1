@@ -30,7 +30,7 @@ fun HomeScreen(
     val cyanColor = Color(0xFF0ED2F7)
     val darkBg = Color(0xFF020617)
 
-    var selectedTab by remember { mutableStateOf("libres") }
+    var selectedTab by remember { mutableStateOf("publico") }
 
     val cursos = listOf(
 
@@ -140,9 +140,9 @@ fun HomeScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "PUBLICO",
-                        color = if (selectedTab == "libres") cyanColor else Color.Gray,
+                        color = if (selectedTab == "publico") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
-                            selectedTab = "libres"
+                            selectedTab = "publico"
                             onLibresClick()
                         }
                     )
@@ -152,7 +152,7 @@ fun HomeScreen(
                             .height(2.dp)
                             .width(50.dp)
                             .background(
-                                if (selectedTab == "libres") cyanColor else Color.Transparent
+                                if (selectedTab == "publico") cyanColor else Color.Transparent
                             )
                     )
                 }
@@ -161,9 +161,9 @@ fun HomeScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "PRIVADOS",
-                        color = if (selectedTab == "grupos") cyanColor else Color.Gray,
+                        color = if (selectedTab == "privados") cyanColor else Color.Gray,
                         modifier = Modifier.clickable {
-                            selectedTab = "grupos"
+                            selectedTab = "privados"
                             onGruposClick()
                         }
                     )
@@ -173,7 +173,7 @@ fun HomeScreen(
                             .height(2.dp)
                             .width(50.dp)
                             .background(
-                                if (selectedTab == "grupos") cyanColor else Color.Transparent
+                                if (selectedTab == "privados") cyanColor else Color.Transparent
                             )
                     )
                 }
