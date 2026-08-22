@@ -17,11 +17,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.example.ch3mxr.ui.components.CourseCard
-import com.example.ch3mxr.R
+import com.example.ch3mxr.ui.model.CourseCatalog
 
 @Composable
 fun HomeScreen(
-    onQuimicaClick: () -> Unit,
+    onCourseClick: (String) -> Unit,
     onLibresClick: () -> Unit,
     onGruposClick: () -> Unit,
     onLogoutClick: () -> Unit = {}
@@ -32,33 +32,7 @@ fun HomeScreen(
 
     var selectedTab by remember { mutableStateOf("libres") }
 
-    val cursos = listOf(
-
-        Triple(
-            "Química",
-            "Átomos, moléculas y enlaces",
-            R.drawable.fond_curs_quim
-        ),
-
-        Triple(
-            "Biología",
-            "Células, tejidos y genética",
-            R.drawable.fond_curs_biol
-        ),
-
-        Triple(
-            "Matemáticas",
-            "Álgebra, geometría y cálculo",
-            R.drawable.fond_curs_mate
-        ),
-
-        Triple(
-            "Historia",
-            "Historia Universal",
-            R.drawable.fond_curs_hist
-        )
-
-    )
+    val cursos = CourseCatalog.all
 
     Box(
         modifier = Modifier
@@ -107,17 +81,14 @@ fun HomeScreen(
 
                     CourseCard(
 
-                        titulo = curso.first,
+                        titulo = curso.title,
 
-                        descripcion = curso.second,
+                        descripcion = curso.description,
 
-                        imagen = curso.third,
+                        imagen = curso.imageRes,
 
                         onClick = {
-
-                            if (curso.first == "Química")
-                                onQuimicaClick()
-
+                            onCourseClick(curso.id)
                         }
 
                     )

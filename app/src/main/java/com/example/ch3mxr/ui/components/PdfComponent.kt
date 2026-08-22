@@ -32,6 +32,8 @@ import com.github.barteksc.pdfviewer.PDFView
 @Composable
 fun PdfComponent(
     isOpened: Boolean,
+    title: String = "MANUAL",
+    pdfAsset: String,
     onClose: () -> Unit
 ) {
 
@@ -67,7 +69,7 @@ fun PdfComponent(
             ) {
 
                 Text(
-                    text = "MANUAL",
+                    text = title,
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -103,7 +105,7 @@ fun PdfComponent(
         AndroidView(
             factory = { context ->
                 PDFView(context, null).apply {
-                    fromAsset("manual.pdf")
+                    fromAsset(pdfAsset)
                         .defaultPage(0)
                         .spacing(4)
                         .onError { error ->

@@ -29,7 +29,9 @@ sealed interface Routes {
     data object Home : Routes
 
     @Serializable
-    data object Quimica : Routes
+    data class CourseDetail(
+        val courseId: String
+    ) : Routes
 
     @Serializable
     data object Groups : Routes

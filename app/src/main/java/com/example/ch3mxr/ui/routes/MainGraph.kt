@@ -5,11 +5,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
+import com.example.ch3mxr.ui.features.main.CourseScreen
 import com.example.ch3mxr.ui.features.main.CreateGroupScreen
 import com.example.ch3mxr.ui.features.main.EditGroupScreen
 import com.example.ch3mxr.ui.features.main.GroupsScreen
 import com.example.ch3mxr.ui.features.main.HomeScreen
-import com.example.ch3mxr.ui.features.main.QuimicaScreen
+import com.example.ch3mxr.ui.model.CourseCatalog
 import com.example.ch3mxr.ui.features.SessionViewModel
 
 fun NavGraphBuilder.mainGraph(
@@ -22,8 +23,8 @@ fun NavGraphBuilder.mainGraph(
     ) {
         composable<Routes.Home> {
             HomeScreen(
-                onQuimicaClick = {
-                    navController.navigate(Routes.Quimica)
+                onCourseClick = { courseId ->
+                    navController.navigate(Routes.CourseDetail(courseId))
                 },
                 onLibresClick = {},
                 onGruposClick = {
@@ -39,8 +40,11 @@ fun NavGraphBuilder.mainGraph(
                 }
             )
         }
-        composable<Routes.Quimica> {
-            QuimicaScreen(
+        composable<Routes.CourseDetail> {
+            val route =
+                it.toRoute<Routes.CourseDetail>()
+            CourseScreen(
+                course = CourseCatalog.byId(route.courseId),
                 onBack = {
                     navController.popBackStack()
                 }
