@@ -54,9 +54,10 @@ import androidx.compose.ui.unit.sp
 import com.example.ch3mxr.R
 import com.example.ch3mxr.ui.manager.FacebookAuthManager
 import com.example.ch3mxr.ui.manager.GoogleAuthManager
-import com.example.ch3mxr.data.domain.SessionData
+import com.example.ch3mxr.data.domain.dto.SessionData
 import com.example.ch3mxr.ui.components.AnimatedFlask
 import com.example.ch3mxr.ui.components.AnimatedGlowButton
+import com.example.ch3mxr.ui.features.SessionViewModel
 import com.example.ch3mxr.ui.features.main.ParticleBackground
 import com.example.ch3mxr.ui.theme.Octosquares
 import kotlinx.coroutines.delay
@@ -68,7 +69,8 @@ fun LoginScreenImproved(
     onLoginSuccess: (SessionData) -> Unit,
     onRegisterClick: () -> Unit,
     googleAuthManager: GoogleAuthManager,
-    facebookAuthManager: FacebookAuthManager
+    facebookAuthManager: FacebookAuthManager,
+    sessionViewModel: SessionViewModel
 ) {
     // 1. Nombres corregidos (empiezan con minúscula)
     val cyanColor = Color(0xFF0ED2F7)
@@ -258,25 +260,24 @@ fun LoginScreenImproved(
 
                                     delay(2000)
 
-                                    if (
-                                        usuarioState == "admin" &&
-                                        passwordState == "1234"
-                                    ) {
+                                    sessionViewModel.makeLogin(
+                                        usuarioState,
+                                        passwordState,
+                                        onResult = { value ->
+                                            if (value) {
+                                                onLoginSuccess(
+                                                    SessionData(
+                                                        authProvider = "manual",
+                                                        usuario = usuarioState,
+                                                        nombre = "Admin"
+                                                    )
+                                                )
+                                            } else {
+                                                errorState =
+                                                    "Usuario o contraseña incorrectos"
+                                            }
 
-                                        onLoginSuccess(
-                                            SessionData(
-                                                authProvider = "manual",
-                                                usuario = usuarioState,
-                                                nombre = "Admin"
-                                            )
-                                        )
-
-                                    } else {
-
-                                        errorState =
-                                            "Usuario o contraseña incorrectos"
-                                    }
-
+                                        })
                                     isLoading = false
                                 }
                             }
@@ -299,8 +300,10 @@ fun LoginScreenImproved(
                     contentColor = cyanColor // Uso de nombre corregido
                 )
             ) {
-                Text("Registrarse", fontSize = 18.sp,
-                    fontFamily = Octosquares, fontWeight = FontWeight.SemiBold)
+                Text(
+                    "Registrarse", fontSize = 18.sp,
+                    fontFamily = Octosquares, fontWeight = FontWeight.SemiBold
+                )
             }
 
             Row(

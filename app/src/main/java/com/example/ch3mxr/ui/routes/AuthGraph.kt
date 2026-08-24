@@ -17,6 +17,7 @@ fun NavGraphBuilder.authGraph(
     ) {
         composable<Routes.Login> {
             LoginScreenImproved(
+                sessionViewModel = sessionViewModel,
                 googleAuthManager = sessionViewModel.googleAuthManager,
                 facebookAuthManager = sessionViewModel.facebookAuthManager,
                 onLoginSuccess = { sessionData ->

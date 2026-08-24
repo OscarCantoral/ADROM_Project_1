@@ -1,4 +1,4 @@
-package com.example.ch3mxr.data.domain
+package com.example.ch3mxr.data.domain.dto
 
 data class SessionData(
     val isLoggedIn: Boolean = false,

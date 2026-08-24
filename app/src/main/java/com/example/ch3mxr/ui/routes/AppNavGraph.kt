@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.ch3mxr.data.domain.SessionData
+import com.example.ch3mxr.data.domain.dto.SessionData
 import com.example.ch3mxr.ui.features.SessionViewModel
 import com.example.ch3mxr.ui.features.splash.SplashScreen
 
