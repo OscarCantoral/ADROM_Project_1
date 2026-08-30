@@ -35,6 +35,7 @@ fun NavGraphBuilder.authGraph(
         }
         composable<Routes.Register> {
             RegisterScreen(
+                sessionViewModel = sessionViewModel,
                 onRegisterSuccess = {
                     navController.popBackStack()
                 },

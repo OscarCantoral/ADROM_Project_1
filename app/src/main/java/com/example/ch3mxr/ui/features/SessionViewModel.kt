@@ -2,6 +2,7 @@ package com.example.ch3mxr.ui.features
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ch3mxr.data.domain.dto.RegisterRequest
 import com.example.ch3mxr.data.domain.dto.SessionData
 import com.example.ch3mxr.data.datastore.LocalData
 import com.example.ch3mxr.data.remote.RemoteRepository
@@ -25,15 +26,51 @@ class SessionViewModel @Inject constructor(
         }
     }
 
-    fun makeLogin(username: String, password: String, onResult: (value: Boolean) -> Unit) {
+    fun makeLogin(
+        username: String,
+        password: String,
+        onResult: (session: SessionData?, error: String?) -> Unit
+    ) {
         viewModelScope.launch {
-            val result = remoteRepository.login(username, password);
-            if (result != null) {
-                // TODO: GUARDAR EN EL LOCALDATA(LOCALSTORAGE)
-                onResult(true)
+            val (response, error) = remoteRepository.login(username, password)
+            if (response != null) {
+                val session = SessionData(
+                    isLoggedIn = true,
+                    authProvider = "manual",
+                    userId = response.id,
+                    usuario = response.username,
+                    email = response.email,
+                    nombre = response.firstName ?: "",
+                    apellido = response.lastName ?: ""
+                )
+                onResult(session, null)
             } else {
-                onResult(false)
+                onResult(null, error)
             }
+        }
+    }
+
+    fun registerUser(
+        username: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        phone: String,
+        onResult: (success: Boolean, error: String?) -> Unit
+    ) {
+        viewModelScope.launch {
+            val (response, error) = remoteRepository.register(
+                RegisterRequest(
+                    username = username,
+                    password = password,
+                    firstName = firstName,
+                    lastName = lastName,
+                    email = email,
+                    phone = phone
+                )
+            )
+            onResult(response != null, error)
         }
     }
 

@@ -60,7 +60,6 @@ import com.example.ch3mxr.ui.components.AnimatedGlowButton
 import com.example.ch3mxr.ui.features.SessionViewModel
 import com.example.ch3mxr.ui.features.main.ParticleBackground
 import com.example.ch3mxr.ui.theme.Octosquares
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -258,27 +257,18 @@ fun LoginScreenImproved(
 
                                 scope.launch {
 
-                                    delay(2000)
-
                                     sessionViewModel.makeLogin(
                                         usuarioState,
                                         passwordState,
-                                        onResult = { value ->
-                                            if (value) {
-                                                onLoginSuccess(
-                                                    SessionData(
-                                                        authProvider = "manual",
-                                                        usuario = usuarioState,
-                                                        nombre = "Admin"
-                                                    )
-                                                )
+                                        onResult = { session, errorMsg ->
+                                            isLoading = false
+                                            if (session != null) {
+                                                onLoginSuccess(session)
                                             } else {
                                                 errorState =
-                                                    "Usuario o contraseña incorrectos"
+                                                    errorMsg ?: "Usuario o contraseña incorrectos"
                                             }
-
                                         })
-                                    isLoading = false
                                 }
                             }
                         }

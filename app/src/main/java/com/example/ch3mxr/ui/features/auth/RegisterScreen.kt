@@ -19,15 +19,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ch3mxr.ui.features.SessionViewModel
 import com.example.ch3mxr.ui.features.main.ParticleBackground
 import com.example.ch3mxr.ui.theme.Octosquares
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
-    onBackToLogin: () -> Unit
+    onBackToLogin: () -> Unit,
+    sessionViewModel: SessionViewModel
 ) {
 
     val cyanColor = Color(0xFF0ED2F7)
@@ -43,6 +44,7 @@ fun RegisterScreen(
     var telefono by remember { mutableStateOf("") }
 
     var error by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -153,7 +155,15 @@ fun RegisterScreen(
             })
 
             if (error.isNotEmpty()) {
-                Text(error, color = Color.Red)
+                Text(error, color = Color.Red, modifier = Modifier.padding(bottom = 8.dp))
+            }
+
+            if (successMessage.isNotEmpty()) {
+                Text(
+                    successMessage,
+                    color = Color(0xFF4ADE80),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -165,24 +175,48 @@ fun RegisterScreen(
                 Button(
                     onClick = {
 
+                        val emailOk = correo.isNotBlank() && correo.contains("@")
+
                         if (
                             usuario.isBlank() ||
                             password.isBlank() ||
                             nombre.isBlank() ||
                             apellido.isBlank() ||
                             correo.isBlank() ||
-                            telefono.isBlank()
+                            !emailOk
                         ) {
-                            error = "Todos los campos son obligatorios"
+                            error = if (emailOk.not()) {
+                                "Ingresa un correo válido"
+                            } else {
+                                "Todos los campos son obligatorios"
+                            }
+                            successMessage = ""
                             return@Button
                         }
 
+                        error = ""
+                        successMessage = ""
                         isLoading = true
 
                         scope.launch {
-                            delay(2000)
-                            onRegisterSuccess()
-                            isLoading = false
+                            sessionViewModel.registerUser(
+                                username = usuario,
+                                password = password,
+                                firstName = nombre,
+                                lastName = apellido,
+                                email = correo,
+                                phone = telefono,
+                                onResult = { success, errorMsg ->
+                                    isLoading = false
+                                    if (success) {
+                                        successMessage =
+                                            "Registro exitoso, ahora puedes iniciar sesión"
+                                        onRegisterSuccess()
+                                    } else {
+                                        error = errorMsg ?: "Error al registrar el usuario"
+                                    }
+                                }
+                            )
                         }
                     },
                     modifier = Modifier
