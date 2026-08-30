@@ -16,7 +16,8 @@ import javax.inject.Singleton
 object RemoteModule {
 
 //    private const val BASE_URL = "http://localhost:8080/"
-    private const val BASE_URL = "http://192.168.1.42:8080/"
+    //private const val BASE_URL = "http://192.168.1.42:8080/"
+    private const val BASE_URL = "http://192.168.18.23:8080/"
 
     private const val CLIENT_ID = "chemxr-client"
     private const val CLIENT_SECRET = "bonjour"
